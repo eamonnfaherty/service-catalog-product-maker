@@ -1,6 +1,5 @@
 import click
 import requests
-import yaml
 from cfn_flip import to_yaml
 import json
 
