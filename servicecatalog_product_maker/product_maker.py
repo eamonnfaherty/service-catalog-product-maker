@@ -71,14 +71,14 @@ def generate(type, specification, include_optional, property_types, friendly_nam
 @click.argument('type')
 @click.option('--include-optional/--no-include-optional', default=False)
 def make_me_a(region, type, include_optional):
-    result = generate_a(region, type, include_optional)
-    click.echo(result)
-
-
-def generate_a(region, type, include_optional):
     source = f"https://cfn-resource-specifications-{region}-prod.s3.{region}.amazonaws.com/latest/gzip/CloudFormationResourceSpecification.json"
     response = requests.get(source)
     content = response.json()
+    result = generate_a(content, type, include_optional)
+    click.echo(result)
+
+
+def generate_a(content, type, include_optional):
     property_types = content.get('PropertyTypes')
     resources = content.get('ResourceTypes')
     specification = resources.get(type)
@@ -113,7 +113,7 @@ def make_me_all(region, output, include_optional):
     version = content.get('ResourceSpecificationVersion')
     resource_types = content.get('ResourceTypes')
     for resource_type in resource_types.keys():
-        result = generate_a(region, resource_type, include_optional)
+        result = generate_a(content, resource_type, include_optional)
         out = os.path.join(output, resource_type.replace("::", "-"), version)
         if not os.path.exists(out):
             os.makedirs(out)
