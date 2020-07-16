@@ -9,7 +9,7 @@ with open(os.path.abspath(__file__).replace('setup.py', 'requirements.txt'), "r"
 
 setuptools.setup(
     name="servicecatalog-product-maker",
-    version="0.0.1",
+    version="0.1.0",
     author="Eamonn Faherty",
     author_email="python-packages@designandsolve.co.uk",
     description="Helpers to make creating AWS Service Catalog products easier",
